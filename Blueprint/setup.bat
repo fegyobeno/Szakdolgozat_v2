@@ -40,22 +40,27 @@ set REPO_URL=https://github.com/fegyobeno/Szakdolgozat_v2.git
 @REM ControlNode beállítása
 @REM https://dev.to/arc42/enable-ssh-access-to-multipass-vms-36p7
 @REM ssh vmuser@172.27.135.229 -i Virtual_ENV/multipass-ssh-key
-for /f "tokens=1,2,3 delims=|" %%a in ("%control_node%") do (
-    echo "Entering ControlNode with the following credentials:"
-    echo "%%b"
-    echo "%%a"
-    echo "%%c"
-    (
-        echo "Executing multiple commands on control node VM..."
-        ssh %%a@%%b -i ../Virtual_ENV/multipass-ssh-key "if [ -d 'Szakdolgozat_v2' ]; then rm -rf Szakdolgozat_v2; fi && git clone %REPO_URL% && cd Szakdolgozat_v2 && chmod +x Blueprint/control_node_setup.sh && ./Blueprint/control_node_setup.sh"
-    )
-    echo "Exiting control node VM..."
+@REM for /f "tokens=1,2,3 delims=|" %%a in ("%control_node%") do (
+@REM     echo "Entering ControlNode with the following credentials:"
+@REM     echo "%%b"
+@REM     echo "%%a"
+@REM     echo "%%c"
+@REM     (
+@REM         echo "Executing multiple commands on control node VM..."
+@REM         ssh %%a@%%b -i ../Virtual_ENV/multipass-ssh-key "if [ -d 'Szakdolgozat_v2' ]; then rm -rf Szakdolgozat_v2; fi && git clone %REPO_URL% && cd Szakdolgozat_v2 && chmod +x Blueprint/control_node_setup.sh && ./Blueprint/control_node_setup.sh"
+@REM     )
+@REM     echo "Exiting control node VM..."
     
-)
+@REM )
 
 @REM Node-ok beállítása
-for %%n in (%nodes:;= %) do (
-    for /f "tokens=1,2,3 delims=|" %%a in ("%%n") do (
+@REM echo "%nodes:;= %"
+set "nodes=%nodes:;= %"
+set "nodes=%nodes:|=@%"
+@REM echo "%nodes%"
+@REM echo "sth"
+for %%n in (%nodes%) do (
+    for /f "tokens=1,2,3 delims=@" %%a in ("%%n") do (
         echo "Entering node with the following credentials:"
         echo "%%b"
         echo "%%a"
