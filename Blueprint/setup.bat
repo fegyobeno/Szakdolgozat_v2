@@ -47,12 +47,26 @@ for /f "tokens=1,2,3 delims=|" %%a in ("%control_node%") do (
     echo "%%c"
     (
         echo "Executing multiple commands on control node VM..."
-        ssh %%a@%%b -i ../Virtual_ENV/multipass-ssh-key "if [ -d 'Szakdolgozat_v2' ]; then rm -rf Szakdolgozat_v2; fi && git clone %REPO_URL%"
+        ssh %%a@%%b -i ../Virtual_ENV/multipass-ssh-key "if [ -d 'Szakdolgozat_v2' ]; then rm -rf Szakdolgozat_v2; fi && git clone %REPO_URL% && cd Szakdolgozat_v2 && chmod +x Blueprint/control_node_setup.sh && ./Blueprint/control_node_setup.sh"
     )
     echo "Exiting control node VM..."
     
 )
 
 @REM Node-ok beállítása
+for %%n in (%nodes:;= %) do (
+    for /f "tokens=1,2,3 delims=|" %%a in ("%%n") do (
+        echo "Entering node with the following credentials:"
+        echo "%%b"
+        echo "%%a"
+        echo "%%c"
+        (
+            echo "Executing multiple commands on node VM..."
+            ssh %%a@%%b -i ../Virtual_ENV/multipass-ssh-key "if [ -d 'Szakdolgozat_v2' ]; then rm -rf Szakdolgozat_v2; fi && git clone %REPO_URL% && cd Szakdolgozat_v2 && chmod +x Blueprint/node_setup.sh && ./Blueprint/node_setup.sh"
+        )
+        echo "Exiting node VM..."
+    )
+)
+
 
 endlocal
