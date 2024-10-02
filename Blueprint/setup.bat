@@ -23,19 +23,6 @@ echo "Nodes: %nodes%"
 
 set REPO_URL=https://github.com/fegyobeno/Szakdolgozat_v2.git
 
-@REM Bróker beállítása
-@REM A broker be van állítva
-@REM for /f "tokens=1,2,3 delims=|" %%a in ("%broker%") do (
-@REM     echo "Entering broker with the following credentials:"
-@REM     echo "%%b"
-@REM     echo "%%a"
-@REM     echo "%%c"
-@REM     (
-@REM         echo "Executing multiple commands on broker VM..."
-@REM         plink %%b -l %%a -pw %%c "echo 'First command on broker VM' && echo 'Second command on broker VM' && echo 'Third command on broker VM'"
-@REM     )
-@REM     echo "Exiting broker VM..."
-@REM )
 
 @REM ControlNode beállítása
 @REM https://dev.to/arc42/enable-ssh-access-to-multipass-vms-36p7
