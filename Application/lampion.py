@@ -2,6 +2,7 @@ from instrument import Instrument
 import os
 import platform
 import threading
+import subprocess
 
 print("WELCOME TO LAMPION - A MULTI PITCH SOUND RECOGNITION SOFTWARE")
 print("-------------------------------------------------------------")
@@ -72,45 +73,30 @@ print("Initiating the recognition process...")
 
 #TODO: send a message for the controll node as to how many instruments are connected
 def initiate_controll_node():
-    os.system(f"initiate_controll_node.bat {len(instruments)}")
+    #os.system(f"python3 mqtt_publis_message.py pitches/initiate_control_node {len(instruments)}")
+    subprocess.run(["python3", "mqtt_publish_message.py", "pitches/initiate_control_node", str(len(instruments))])
 
 control_thread = threading.Thread(target=initiate_controll_node)
 control_thread.start()
-#os.system(f"initiate_controll_node.bat {len(instruments)}")
 
-#TODO: start a new thread for each instrument
-def start_instrument_client(instrument):
+#TODO: Send the files to the nodes usingn mqtt 
+def start_instrument_node(instrument):
     temp_file_path = os.path.join(os.getenv('TEMP'), f"{instrument.name}_{instrument.id}.txt")
     with open(temp_file_path, 'w') as temp_file:
         print(f"Writing the scale of {instrument.name} to {temp_file_path}")
         temp_file.write(str(instrument.name))
         temp_file.write(",")
         temp_file.write(str(instrument.scale))
-    os.system(f"node_setup.bat {instrument.name}{instrument.id} pitches\\{instrument.wav_file} {temp_file_path}")
+    #os.system(f"node_setup.bat {instrument.name}{instrument.id} pitches\\{instrument.wav_file} {temp_file_path}")
+    subprocess.run(["python3", "mqtt_publish_message.py", "pitches/initiate_control_node", str(len(instruments))])
 
 threads = []
 for instrument in instruments:
-    thread = threading.Thread(target=start_instrument_client, args=(instrument,))
+    thread = threading.Thread(target=start_instrument_node, args=(instrument,))
     threads.append(thread)
     thread.start()
 
 for thread in threads:
     thread.join()
 
-# for instrument in instruments:
-#     temp_file_path = os.path.join(os.getenv('TEMP'), f"{instrument.name}_{instrument.id}.txt")
-#     with open(temp_file_path, 'w') as temp_file:
-#         print(f"Writing the scale of {instrument.name} to {temp_file_path}")
-#         temp_file.write(str(instrument.name))
-#         temp_file.write(",")
-#         temp_file.write(str(instrument.scale))
-#     #Launch and configure the client with node_setup.bat
-#     #make sure to start each client with a different id
-#     os.system(f"node_setup.bat {instrument.name}{instrument.id} pitches\{instrument.wav_file} {temp_file_path}")
-        
-
-
-#This part is not necessary anymore as instruments can be reused
-#Multipass delete insturment.name
-#multipass purge
 control_thread.join()
