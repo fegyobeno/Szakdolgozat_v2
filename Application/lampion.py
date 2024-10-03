@@ -102,8 +102,8 @@ def start_instrument_node(instrument, node):
 
 threads = []
 node = ["Node1", "Node2", "Node3", "Node4"]
-for i in range(len(instruments)):
-    thread = threading.Thread(target=start_instrument_node, args=(instruments[i],node[i]))
+for i in range(0,len(instruments)):
+    thread = threading.Thread(target=start_instrument_node, args=(instruments[i],node[i],))
     threads.append(thread)
     thread.start()
 

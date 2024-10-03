@@ -3,7 +3,7 @@ import os
 import sys
 
 BROKER = "MosquittoBroker"
-TOPIC = f"system/{sys.argv[1]}"
+TOPIC = f"system/{sys.argv[1]}/+"
 OUTPUT_TOPIC = f"ControlNode/{sys.argv[1]}"
 watching = False
 
