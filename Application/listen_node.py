@@ -1,9 +1,10 @@
 import paho.mqtt.client as mqtt
 import os
+import sys
 
 BROKER = "MosquittoBroker"
-TOPIC = "system/Node"
-OUTPUT_TOPIC = "pitches/Node"
+TOPIC = f"system/{sys.argv[1]}"
+OUTPUT_TOPIC = f"ControlNode/{sys.argv[1]}"
 watching = False
 
 SAVE_DIR = "TMP"

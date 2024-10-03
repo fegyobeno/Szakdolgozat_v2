@@ -5,7 +5,7 @@ import paho.mqtt.client as mqtt
 # Define the MQTT broker details
 BROKER = 'MosquittoBroker'
 PORT = 1883
-TOPIC = 'pitches/+'
+TOPIC = 'ControlNode/+'
 #MAX_MESSAGES = 10  # Set the maximum number of messages to rec eive
 
 # Initialize a counter for the number of received messages

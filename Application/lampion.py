@@ -74,13 +74,14 @@ print("Initiating the recognition process...")
 #TODO: send a message for the controll node as to how many instruments are connected
 def initiate_controll_node():
     #os.system(f"python3 mqtt_publis_message.py pitches/initiate_control_node {len(instruments)}")
-    subprocess.run(["python3", "mqtt_publish_message.py", "pitches/initiate_control_node", str(len(instruments))])
+    subprocess.run(["python3", "mqtt_publish_message.py", "ControlNode/initiate_control_node", str(len(instruments))])
 
 control_thread = threading.Thread(target=initiate_controll_node)
 control_thread.start()
 
 #TODO: Send the files to the nodes usingn mqtt 
 def start_instrument_node(instrument):
+    subprocess.run(["python3", "mqtt_publish_message.py", f"pitches/{instrument.name}", f"{instrument.wav_file}"])
     temp_file_path = os.path.join(os.getenv('TEMP'), f"{instrument.name}_{instrument.id}.txt")
     with open(temp_file_path, 'w') as temp_file:
         print(f"Writing the scale of {instrument.name} to {temp_file_path}")
@@ -88,7 +89,7 @@ def start_instrument_node(instrument):
         temp_file.write(",")
         temp_file.write(str(instrument.scale))
     #os.system(f"node_setup.bat {instrument.name}{instrument.id} pitches\\{instrument.wav_file} {temp_file_path}")
-    subprocess.run(["python3", "mqtt_publish_message.py", "pitches/initiate_control_node", str(len(instruments))])
+    subprocess.run(["python3", "mqtt_publish_message.py", f"pitches/{instrument.name}", f"{instrument.wav_file}"])
 
 threads = []
 for instrument in instruments:

@@ -5,7 +5,7 @@ import sys
 
 # MQTT broker details
 #TODO: Somehow get the adress of the broker automatically from multipass list
-broker = "172.28.159.105"  # Replace with your broker address
+broker = "172.27.85.49"  # Replace with your broker address
 port = 1883  # Default MQTT port
 topic = f"{sys.argv[1]}"  # Replace with your topic
 message = f"{sys.argv[2]}"  # Message to publish
