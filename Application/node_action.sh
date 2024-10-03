@@ -2,7 +2,7 @@
 
 mkdir TMP
 
-python3 listen_node.py
+python3 listen_node.py $(hostname)
 
 python3 pitch_detection.py TMP/*.wav
 python3 process.py

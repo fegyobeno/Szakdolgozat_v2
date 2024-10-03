@@ -15,21 +15,27 @@ def on_connect(client, userdata, flags, rc):
 
 def on_message(client, userdata, msg):
     global watching
-    message = msg.payload.decode()
-    print(f"{message} {msg.topic}")
-    if watching and message != "start" and message != "end":
-        topic = msg.topic
-        payload = msg.payload.decode('utf-8')
-        file_path = os.path.join(SAVE_DIR, topic.replace('/', '_'))
-        with open(file_path, 'a') as f:
-            f.write(payload + '\n')
-    if message == "start" and not watching:
-        print("Received start message, starting to watch for files...")
-        watching = True
-    elif message == "end" and watching: 
-        print("Received end message, stopping...")
-        watching = False
-        client.disconnect()
+    if msg.topic == f"system/{sys.argv[1]}/end" or msg.topic == f"system/{sys.argv[1]}/start":
+        message = msg.payload.decode()
+        print(f"{message} {msg.topic}")    
+        if message == "start" and not watching:
+            print("Received start message, starting to watch for files...")
+            watching = True
+        elif message == "end" and watching: 
+            print("Received end message, stopping...")
+            watching = False
+            client.disconnect()
+    else:
+        if watching:
+            topic = msg.topic   
+            payload = msg.payload
+            file_path = os.path.join(SAVE_DIR, topic.replace('/', '_'))
+            print(f"{topic} {file_path}")
+            with open(file_path, 'wb') as f:
+                f.write(payload)
+        else:
+            pass
+
 
 def publish_file(client, file):
     with open(file, 'rb') as f:

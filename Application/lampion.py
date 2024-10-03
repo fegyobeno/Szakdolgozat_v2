@@ -4,6 +4,13 @@ import platform
 import threading
 import subprocess
 
+with open("../Blueprint/nodelist.txt", "r") as file:
+    first_line = file.readline().strip()
+    broker_ip = first_line.split('|')[1]
+
+print(f"Broker IP: {broker_ip}")
+
+
 print("WELCOME TO LAMPION - A MULTI PITCH SOUND RECOGNITION SOFTWARE")
 print("-------------------------------------------------------------")
 print("IN THE FIRST STEP YOU CAN SET UP EACH INSTRUMENT INDIVIDUALLY")
@@ -43,7 +50,7 @@ for i in range(number_of_instruments):
             pitches = input().split(",")
             instrument_scale = [float(pitch) for pitch in pitches]
 
-        #TODO: Ask for the location of the wav file corresponding to the instrument
+        #Ask for the location of the wav file corresponding to the instrument
         while True:
             print("PLEASE ENTER THE LOCATION OF THE WAV FILE (relative to the pitches folder):")
             wav_file_location = input()+".wav"
@@ -61,7 +68,6 @@ for i in range(number_of_instruments):
         if confirmation == "Y":
             print(f"{i + 1}. INSTRUMENT: {instrument_name} -> SETUP COMPLETED")
             instruments.append(temp_instrument)
-            #TODO: Launch the client for the instrument
             print("-------------------")
             break
         else:
@@ -71,29 +77,33 @@ print("---------------ALL INSTRUMENTS ARE SET UP---------------")
 print("Initiating the recognition process...")
 
 
-#TODO: send a message for the controll node as to how many instruments are connected
+#Send a message for the controll node as to how many instruments are connected
 def initiate_controll_node():
     #os.system(f"python3 mqtt_publis_message.py pitches/initiate_control_node {len(instruments)}")
-    subprocess.run(["python3", "mqtt_publish_message.py", "ControlNode/initiate_control_node", str(len(instruments))])
+    subprocess.run(["python3", "mqtt_publish_message.py", broker_ip, "ControlNode/initiate_control_node", str(len(instruments))])
 
 control_thread = threading.Thread(target=initiate_controll_node)
 control_thread.start()
 
-#TODO: Send the files to the nodes usingn mqtt 
-def start_instrument_node(instrument):
-    subprocess.run(["python3", "mqtt_publish_message.py", f"pitches/{instrument.name}", f"{instrument.wav_file}"])
+#Send the files to the nodes usingn mqtt 
+def start_instrument_node(instrument, node):
+    subprocess.run(["python3", "mqtt_publish_message.py",broker_ip, f"system/{node}/start", f"start"])
     temp_file_path = os.path.join(os.getenv('TEMP'), f"{instrument.name}_{instrument.id}.txt")
     with open(temp_file_path, 'w') as temp_file:
         print(f"Writing the scale of {instrument.name} to {temp_file_path}")
         temp_file.write(str(instrument.name))
         temp_file.write(",")
         temp_file.write(str(instrument.scale))
-    #os.system(f"node_setup.bat {instrument.name}{instrument.id} pitches\\{instrument.wav_file} {temp_file_path}")
-    subprocess.run(["python3", "mqtt_publish_message.py", f"pitches/{instrument.name}", f"{instrument.wav_file}"])
+
+    subprocess.run(["python3", "mqtt_publish_file.py",broker_ip, f"system/{node}/{instrument.name}_{instrument.id}.txt", temp_file_path])
+    subprocess.run(["python3", "mqtt_publish_file.py",broker_ip, f"system/{node}/{instrument.wav_file}", f"pitches/{instrument.wav_file}"])    
+    
+    subprocess.run(["python3", "mqtt_publish_message.py",broker_ip, f"system/{node}/end", f"end"])
 
 threads = []
-for instrument in instruments:
-    thread = threading.Thread(target=start_instrument_node, args=(instrument,))
+node = ["Node1", "Node2", "Node3", "Node4"]
+for i in range(len(instruments)):
+    thread = threading.Thread(target=start_instrument_node, args=(instruments[i],node[i]))
     threads.append(thread)
     thread.start()
 

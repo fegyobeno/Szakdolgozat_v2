@@ -35,6 +35,7 @@ for /f "tokens=1,2,3 delims=|" %%a in ("%control_node%") do (
     (
         echo "Executing multiple commands on control node VM..."
         ssh %%a@%%b -i ../Virtual_ENV/multipass-ssh-key "if [ -d 'Szakdolgozat_v2' ]; then rm -rf Szakdolgozat_v2; fi && git clone %REPO_URL% && cd Szakdolgozat_v2 && chmod +x Blueprint/control_node_setup.sh && ./Blueprint/control_node_setup.sh"
+        ssh %%a@%%b -i ../Virtual_ENV/multipass-ssh-key "cd Szakdolgozat_v2 && chmod +x control_node_action.sh && ./control_node_action.sh"
     )
     echo "Exiting control node VM..."
     
@@ -55,6 +56,7 @@ for %%n in (%nodes%) do (
         (
             echo "Executing multiple commands on node VM..."
             ssh %%a@%%b -i ../Virtual_ENV/multipass-ssh-key "if [ -d 'Szakdolgozat_v2' ]; then rm -rf Szakdolgozat_v2; fi && git clone %REPO_URL% && cd Szakdolgozat_v2 && chmod +x Blueprint/node_setup.sh && ./Blueprint/node_setup.sh"
+            ssh %%a@%%b -i ../Virtual_ENV/multipass-ssh-key "cd Szakdolgozat_v2 && chmod +x node_action.sh && ./node_action.sh"
         )
         echo "Exiting node VM..."
     )
