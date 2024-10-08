@@ -1,6 +1,9 @@
 #!/bin/bash
-
 mkdir TMP
+cd TMP
+touch out.txt
+cd ..
+
 echo $(hostname)
 python3 listen_node.py $(hostname)
 
