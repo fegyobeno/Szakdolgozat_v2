@@ -47,3 +47,5 @@ if %errorlevel% neq 0 (
 ) else (
     multipass start %node2%
 )
+
+multipass list
