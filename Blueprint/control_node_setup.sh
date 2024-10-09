@@ -7,5 +7,3 @@ sudo apt install python3-pip -y
 pip3 install paho-mqtt
 
 pip3 install music21
-
-touch messages
