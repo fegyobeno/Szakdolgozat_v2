@@ -1,4 +1,5 @@
 #!/bin/bash
+rm -rf TMP
 mkdir TMP
 cd TMP
 touch out.txt

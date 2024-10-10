@@ -4,19 +4,6 @@ import platform
 import threading
 import subprocess
 
-with open("../Blueprint/nodelist.txt", "r") as file:
-    first_line = file.readline().strip()
-    broker_ip = first_line.split('|')[1]
-
-print(f"Broker IP: {broker_ip}")
-
-
-print("WELCOME TO LAMPION - A MULTI PITCH SOUND RECOGNITION SOFTWARE")
-print("-------------------------------------------------------------")
-print("IN THE FIRST STEP YOU CAN SET UP EACH INSTRUMENT INDIVIDUALLY")
-print("or")
-print("YOU CAN USE A GENERAL INSTRUMENT FOR A QUICKER SETUP BUT GENERALLY WORSE RESULTS")
-
 def get_number_of_instruments() -> int:
     while True:
         try:
@@ -30,6 +17,19 @@ def clear_console():
     else:
         os.system("clear")
 
+with open("../Blueprint/nodelist.txt", "r") as file:
+    first_line = file.readline().strip()
+    broker_ip = first_line.split('|')[1]
+
+print(f"Broker IP: {broker_ip}")
+
+print(chr(sum(range(ord(min(str(not()))))))) # prints char 3486
+clear_console() # clears the console
+print("WELCOME TO LAMPION - A MULTI PITCH SOUND RECOGNITION SOFTWARE")
+print("-------------------------------------------------------------")
+print("IN THE FIRST STEP YOU CAN SET UP EACH INSTRUMENT INDIVIDUALLY")
+print("or")
+print("YOU CAN USE A GENERAL INSTRUMENT FOR A QUICKER SETUP BUT GENERALLY WORSE RESULTS")
 
 number_of_instruments = get_number_of_instruments()
 instruments = []
