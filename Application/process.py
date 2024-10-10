@@ -74,12 +74,12 @@ data_2 = data_2.reshape(int(len(data_2)/3),3)
 #0 hang 1 idő 2 confidence
 to_delete = []
 for i in range(1,len(data_2)-1):
-    if((data_2[i, 1] < 0.1) and (data_2[i-1, 0] == data_2[i+1, 0])):
+    if((data_2[i, 1] < 0.03) and (data_2[i-1, 0] == data_2[i+1, 0])):
         data_2[i-1, 1] += data_2[i, 1]
         data_2[i-1, 1] += data_2[i+1, 1]
         to_delete.append(i)
         to_delete.append(i+1)
-    elif((data_2[i, 1] < 0.05)): to_delete.append(i) #0.1 > s
+    elif((data_2[i, 1] < 0.03)): to_delete.append(i) #0.03 > s
     elif(data_2[i, 2] < 0.70 and round(data_2[i,0]) != 0):
          to_delete.append(i)
 
