@@ -45,7 +45,7 @@ for i in range(number_of_instruments):
         instrument_name = input().upper()
         print("PLEASE ENTER THE SCALE OF THE INSTRUMENT[pentatonic,chromatic,custom]")
         instrument_scale = input().upper()
-        if instrument_scale == "custom":
+        if instrument_scale == "CUSTOM":
             print("PLEASE ENTER THE PITCHES OF THE INSTRUMENT SEPERATED BY COMMAS")
             pitches = input().split(",")
             instrument_scale = [pitch.upper() for pitch in pitches]

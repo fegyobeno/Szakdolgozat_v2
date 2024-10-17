@@ -14,13 +14,7 @@ try:
 except FileNotFoundError:
     print(f"File not found: {file_path}")
 
-notes = []
-if content[1].upper() == "chromatic".upper():
-    notes = [ 'A', 'A#', 'B','C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#']
-elif content[1].upper() == "pentatonic".upper():
-    notes = [ 'A', 'C', 'D', 'E', 'G']
-else:
-    notes = content[1].strip('[]').replace("'", "").split(',')
+notes = [ 'A', 'A#', 'B','C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#']
 
 octaves = np.arange(0, 9)
 frequencies = []
@@ -33,7 +27,21 @@ for octave in octaves:
 note_freq_array = np.array(frequencies)
 note_freq_array_2 = list(zip(9*notes,note_freq_array))
 
-note_freq_array = np.append(note_freq_array,0)
+if content[1].upper() == "chromatic".upper():
+    pass
+elif content[1].upper() == "pentatonic".upper():
+    t_notes = [ 'A', 'C', 'D', 'E', 'G']
+    note_freq_array_2 = [item for item in note_freq_array_2 if item[0][0:] in t_notes]
+    note_freq_array = np.array([freq for note, freq in note_freq_array_2])
+
+else:
+    t_notes = content[1].strip('[]').replace("'", "").split(',')
+    note_freq_array_2 = [item for item in note_freq_array_2 if item[0][0:] in t_notes]
+    note_freq_array = np.array([freq for _, freq in note_freq_array_2])
+
+note_freq_array = np.append(note_freq_array,0) #0 hz
+# print(note_freq_array)
+# print(note_freq_array_2)
 
 # Read the file
 data = np.loadtxt('TMP/out.txt')
