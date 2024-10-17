@@ -9,7 +9,7 @@ echo $(hostname)
 python3 listen_node.py $(hostname)
 
 python3 pitch_detection.py TMP/*.wav
-python3 process.py
+python3 process.py TMP/*.txt
 python3 convert_to_musescore.py
 
 hostname=$(hostname)

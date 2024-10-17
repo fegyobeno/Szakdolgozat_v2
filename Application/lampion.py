@@ -48,7 +48,7 @@ for i in range(number_of_instruments):
         if instrument_scale == "custom":
             print("PLEASE ENTER THE PITCHES OF THE INSTRUMENT SEPERATED BY COMMAS")
             pitches = input().split(",")
-            instrument_scale = [float(pitch) for pitch in pitches]
+            instrument_scale = [pitch.upper() for pitch in pitches]
 
         #Ask for the location of the wav file corresponding to the instrument
         while True:
@@ -92,7 +92,7 @@ def start_instrument_node(instrument, node):
     with open(temp_file_path, 'w') as temp_file:
         print(f"Writing the scale of {instrument.name} to {temp_file_path}")
         temp_file.write(str(instrument.name))
-        temp_file.write(",")
+        temp_file.write(";")
         temp_file.write(str(instrument.scale))
 
     subprocess.run(["python3", "mqtt_publish_file.py",broker_ip, f"system/{node}/{instrument.name}_{instrument.id}.txt", temp_file_path])
