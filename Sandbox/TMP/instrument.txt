@@ -1,1 +1,1 @@
-CELLO;chromatic
+CELLO;pentatonic
