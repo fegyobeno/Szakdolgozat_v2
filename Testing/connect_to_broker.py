@@ -5,7 +5,7 @@ import sys
 
 # MQTT broker details
 #TODO: Somehow get the adress of the broker automatically from multipass list
-broker = f"192.168.132.96"  # Replace with your broker address
+broker = f"MosquittoBroker"  # Replace with your broker address
 port = 1883  # Default MQTT port
 
 # Define the MQTT client

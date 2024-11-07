@@ -4,9 +4,12 @@ from termcolor import colored
 import sys
 import threading
 import numpy as np
+import music21
+import os
+from music21 import converter
 
 
-ALL_TESTS = 5
+ALL_TESTS = 6
 TESTS_PASSED = 0
 
 def get_number_of_instruments(t) -> int:
@@ -123,11 +126,45 @@ def check_processer(config_file) -> bool:
         print(colored(f"An error occurred: {e}", 'red'))
         return False
 
-def check_combineing_to_musescore() -> bool:
-    return False
+def check_converting_to_musescore() -> bool:
+    try:
+        result = subprocess.run(["python3", "../Application/convert_to_musescore.py"], capture_output=True, text=True, check=True)
+        result.check_returncode()  # Ensure the subprocess completed successfully
+        try:
+            score = music21.converter.parse('TMP/output.musicxml')
+            if score:
+                print(colored("The generated MusicXML is valid", 'green'))
+                return True
+            else:
+                print(colored("The generated MusicXML is invalid", 'red'))
+            return False
+        except Exception as e:
+            print(colored(f"An error occurred while validating MusicXML: {e}", 'red'))
+            return False
+    except subprocess.CalledProcessError as e:
+        print(colored(f"An error occurred: {e}", 'red'))
+        return False
 
 def check_combining_sheets() -> bool:
-    return False
+    try:
+        result = subprocess.run(["python3", "../Application/unification.py"], capture_output=True, text=True, check=True)
+        result.check_returncode()  # Ensure the subprocess completed successfully
+        # Calculate the number of files in the messages folder ending with .musicxml
+        messages_folder = 'messages'
+        musicxml_files = [f for f in os.listdir(messages_folder) if f.endswith('.musicxml')]
+        num_files = len(musicxml_files)
+
+        # Check if the musescore/combined_sheet.musicxml has that many parts
+        combined_sheet = converter.parse('musescore/combined_sheet.musicxml')
+        if len(combined_sheet.parts) == num_files:
+            print(colored("The combined sheet has the correct number of parts", 'green'))
+            return True
+        else:
+            print(colored("The combined sheet does not have the correct number of parts", 'red'))
+            return False
+    except subprocess.CalledProcessError as e:
+        print(colored(f"An error occurred: {e}", 'red'))
+        return False
 
 if __name__ == "__main__":
     with open('../Blueprint/nodelist.txt', 'r') as _file:
@@ -137,17 +174,20 @@ if __name__ == "__main__":
     #check_user_input_number_of_instruments()
     for line in lines[:2]:
         pass
-        #if check_sending_message_to_nodes(line[0], line[1], lines[0][1]):
-        #    TESTS_PASSED += 1
+        if check_sending_message_to_nodes(line[0], line[1], lines[0][1]):
+           TESTS_PASSED += 1
 
-    # if check_recogniser():
-    #     TESTS_PASSED += 1
+    if check_recogniser():
+        TESTS_PASSED += 1
 
-    # if check_processer("TMP/config_chromatic.txt") and check_processer("TMP/config_pentatonic.txt") and check_processer("TMP/config_custom.txt"):
-    #     print(colored("The processer works correctly", 'green'))
-    #     TESTS_PASSED += 1
+    if check_processer("TMP/config_chromatic.txt") and check_processer("TMP/config_pentatonic.txt") and check_processer("TMP/config_custom.txt"):
+        print(colored("The processer works correctly", 'green'))
+        TESTS_PASSED += 1
 
     if check_combining_sheets():
+        TESTS_PASSED += 1
+
+    if check_converting_to_musescore():
         TESTS_PASSED += 1
 
     print(colored("----------------------Testing The Application : completed----------------------", 'blue'))

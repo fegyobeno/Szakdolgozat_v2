@@ -30,7 +30,6 @@ def combine_parts(file_list, output_file):
 # Get the list of MusicXML files in the musescore folder
 musescore_folder = 'messages'
 input_files = [os.path.join(musescore_folder, f) for f in os.listdir(musescore_folder) if f.endswith('.musicxml')]
-#input_files = ['musescore/output.musicxml','musescore/output.musicxml', 'musescore/output2.musicxml']  # Replace with your actual file paths
 output_file = 'musescore/combined_sheet.musicxml'
 
 combine_parts(input_files, output_file)
