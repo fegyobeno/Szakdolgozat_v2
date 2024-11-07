@@ -7,7 +7,11 @@ import subprocess
 def get_number_of_instruments() -> int:
     while True:
         try:
-            return int(input("PLEASE ENTER THE NUMBER OF INSTRUMENTS [Integer]:\n"))
+            t = int(input("PLEASE ENTER THE NUMBER OF INSTRUMENTS [Integer]:\n"))
+            if t > 0:
+                return t
+            else:
+                return 0 
         except ValueError:
             print("Invalid input. Please enter a valid integer.")
 
