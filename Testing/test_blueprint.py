@@ -15,6 +15,7 @@ def get_multipass_list():
 
 def check_git_repo(host, user, repo_path, expected_url) -> bool:
     try:
+        print(colored(f"Checking git repo on {host}", 'blue'))
         result = subprocess.run([".\ensure_git.bat", user, host, "../Virtual_ENV/multipass-ssh-key"], capture_output=True, text=True, check=True)
         result.check_returncode()  # Ensure the subprocess completed successfully
         result = result.stdout.split('\n')

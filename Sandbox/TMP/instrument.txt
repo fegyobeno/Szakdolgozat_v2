@@ -1,1 +1,1 @@
-CELLO;pentatonic
+CELLO;['A','E']

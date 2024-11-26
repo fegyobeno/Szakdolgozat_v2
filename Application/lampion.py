@@ -45,14 +45,22 @@ for i in range(number_of_instruments):
         clear_console()
         print(f"INSTRUMENT {i + 1} SETUP")
         print("-------------------")
+        
         print("PLEASE ENTER THE NAME OF THE INSTRUMENT")
         instrument_name = input().upper()
-        print("PLEASE ENTER THE SCALE OF THE INSTRUMENT[pentatonic,chromatic,custom]")
-        instrument_scale = input().upper()
-        if instrument_scale == "CUSTOM":
-            print("PLEASE ENTER THE PITCHES OF THE INSTRUMENT SEPERATED BY COMMAS")
-            pitches = input().split(",")
-            instrument_scale = [pitch.upper() for pitch in pitches]
+        while True:
+            print("PLEASE ENTER THE SCALE OF THE INSTRUMENT[pentatonic,chromatic,custom]")
+            instrument_scale = input().upper()
+            if instrument_scale == "CUSTOM":
+                print("PLEASE ENTER THE PITCHES OF THE INSTRUMENT SEPERATED BY COMMAS")
+                pitches = input().split(",")
+                instrument_scale = [pitch.upper() for pitch in pitches]
+                break
+            elif instrument_scale == "PENTATONIC" or instrument_scale == "CHROMATIC":
+                break
+            else:
+                pass
+        
 
         #Ask for the location of the wav file corresponding to the instrument
         while True:
@@ -100,7 +108,7 @@ def start_instrument_node(instrument, node):
         temp_file.write(str(instrument.scale))
 
     subprocess.run(["python3", "mqtt_publish_file.py",broker_ip, f"system/{node}/{instrument.name}_{instrument.id}.txt", temp_file_path])
-    subprocess.run(["python3", "mqtt_publish_file.py",broker_ip, f"system/{node}/{instrument.wav_file}", f"pitches/{instrument.wav_file}"])    
+    subprocess.run(["python3", "mqtt_publish_file.py",broker_ip, f"system/{node}/{instrument.wav_file}", f"{instrument.wav_file}"])    
     
     subprocess.run(["python3", "mqtt_publish_message.py",broker_ip, f"system/{node}/end", f"end"])
 
