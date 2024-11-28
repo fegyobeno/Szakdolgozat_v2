@@ -15,5 +15,3 @@ python3 convert_to_musescore.py
 hostname=$(hostname)
 
 mosquitto_pub -h MosquittoBroker -t "ControlNode/$hostname" -f TMP/*.musicxml
-
-rm -rf TMP

@@ -64,10 +64,9 @@ for i in range(number_of_instruments):
 
         #Ask for the location of the wav file corresponding to the instrument
         while True:
-            print("PLEASE ENTER THE LOCATION OF THE WAV FILE (relative to the pitches folder):")
-            wav_file_location = input()+".wav"
-            full_path = os.path.join("pitches", wav_file_location)
-            if os.path.isfile(full_path):
+            print("PLEASE ENTER THE LOCATION OF THE WAV FILE (as an absolute path):")
+            wav_file_location = input()
+            if os.path.isfile(wav_file_location):
                 break
             else:
                 print("The file does not exist. Please enter a valid file location.")

@@ -2,6 +2,8 @@
 @REM Adatok beolvasása a fileból
 setlocal enabledelayedexpansion
 
+python3 collect_ip_addresses.py
+
 set "nodelist=..\Blueprint\nodelist.txt"
 set "broker="
 set "control_node="
@@ -51,5 +53,7 @@ for %%n in (%nodes%) do (
 )
 
 python3 lampion.py
+
+python3 listen_user.py
 
 endlocal
