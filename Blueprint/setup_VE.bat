@@ -4,6 +4,8 @@ setlocal enabledelayedexpansion
 
 pip install -r requirements.txt
 
+python3 ../Application/collect_ip_addresses.py
+
 set "nodelist=nodelist.txt"
 set "broker="
 set "control_node="

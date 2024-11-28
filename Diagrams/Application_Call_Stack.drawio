@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36" version="24.7.17">
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36" version="24.9.1">
   <diagram name="Page-1" id="SqX1o714xJ9qO1pQWiWN">
-    <mxGraphModel dx="875" dy="1604" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="1434" dy="1907" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -48,6 +48,9 @@
         </mxCell>
         <mxCell id="XJArQrUS-RA_R8yWmD0F-10" value="unification.py" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" parent="1" vertex="1">
           <mxGeometry x="210" y="360" width="140" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="xAmr9bC6nZqY7BPEpqAc-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="XJArQrUS-RA_R8yWmD0F-12" target="xAmr9bC6nZqY7BPEpqAc-3">
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="XJArQrUS-RA_R8yWmD0F-12" value="rm -rf messages" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" parent="1" vertex="1">
           <mxGeometry x="210" y="450" width="140" height="60" as="geometry" />
@@ -116,6 +119,9 @@
         </mxCell>
         <mxCell id="XJArQrUS-RA_R8yWmD0F-39" value="minden Node-ra" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
           <mxGeometry x="495" y="-70" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="xAmr9bC6nZqY7BPEpqAc-3" value="mosquitto_pub ..." style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1">
+          <mxGeometry x="210" y="540" width="140" height="60" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>

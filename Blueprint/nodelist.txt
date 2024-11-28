@@ -1,4 +1,4 @@
-ubuntu|172.20.167.84|pwd
-vmuser|172.20.170.99|
-vmuser|172.20.175.22|
-vmuser|172.20.160.7|
+ubuntu|192.14.24.234|pwd
+vmuser|--|
+vmuser|--|
+vmuser|--|
