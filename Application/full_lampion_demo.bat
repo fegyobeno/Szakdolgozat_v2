@@ -2,6 +2,8 @@
 @REM Adatok beolvasása a fileból
 setlocal enabledelayedexpansion
 
+pip install -r requirements.txt
+
 python3 collect_ip_addresses.py
 
 set "nodelist=..\Blueprint\nodelist.txt"
